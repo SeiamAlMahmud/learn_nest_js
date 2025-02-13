@@ -6,7 +6,7 @@ import {
   Request as Req,
   Res,
   Header,
-  Redirect
+  Redirect,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 @Controller('/albums')

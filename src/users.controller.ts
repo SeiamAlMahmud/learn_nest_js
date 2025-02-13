@@ -4,8 +4,9 @@ import { Request, Response } from 'express';
 @Controller('/users')
 export class UsersController {
   @Get('/videos/:id')
-  getVideos(@Param() params: Record<string, any>) {
-    console.log(params);
-    return `Success ${params.id}`;
+  getVideos(@Param('id') param: number) {
+    //directly use it
+    console.log(param);
+    return `Success ${param}`;
   }
 }

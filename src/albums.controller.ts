@@ -4,14 +4,16 @@ import {
   HttpCode,
   HttpStatus,
   Request as Req,
+  Res,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 @Controller('/albums')
 export class AlbumsController {
   @Get()
-  @HttpCode(HttpStatus.OK)
-  getProfile(@Req() req: Request) {
+  // @HttpCode(HttpStatus.OK)
+  getProfile(@Req() req: Request, @Res() res: Response) {
     console.log(req.body);
-    return { userId: 1, username: 'Seiam' };
+    res.status(200); // HttpStatus.OK);
+    res.json({ userId: 1, username: 'Seiam' });
   }
 }

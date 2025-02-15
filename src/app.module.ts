@@ -1,14 +1,22 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { AlbumsController } from './albums.controller';
-import { UserStore } from '../store/users.store';
-import { Store } from 'store/store';
+import { Config } from 'config/config';
 
 // Define your AppModule here
 @Module({
   controllers: [UsersController, AlbumsController],
-  // providers: [UserStore], // when provide & userClass are same then use this way
-  // providers: [{ provide: UserStore, useClass: UserStore }],
-  providers: [UserStore, { provide: Store, useClass: UserStore }],
+  providers: [
+    { provide: 'DATABASE_NAME', useValue: 'MOON_NIGHT' },
+    { provide: 'MAIL', useValue: ['admin@gmail.com', 'no-reply@gmail.com'] },
+    {
+      provide: Config,
+      // provide: 'ENV_CONFIG',
+      useValue: {
+        type: 'DEV',
+        node: '20',
+      },
+    },
+  ],
 })
 export class AppModule {}

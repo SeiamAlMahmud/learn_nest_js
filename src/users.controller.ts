@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Request, Response } from 'express'; // for data types
-import { UserStore } from './users.store';
+import { UserStore } from '../store/users.store';
 
 @Controller('/users') // external cors check 'app.localhost'
 export class UsersController {

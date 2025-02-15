@@ -1,9 +1,14 @@
-import { Controller, Inject } from '@nestjs/common';
-import { Subject } from 'rxjs';
-
+import { Controller, Get } from '@nestjs/common';
+import { UserStore } from 'store/users.store';
+import { HttpStatus} from 'http-status-string';
 @Controller('/users') // external cors check 'app.localhost'
 export class UsersController {
-  constructor(@Inject('EVENT_STORE') private evenBus$: Subject<any>) {
-    console.log(this.evenBus$);
+  constructor(private store: UserStore) {
+    console.log('controller initialized');
+  }
+  @Get()
+  getUsers() {
+    console.log(HttpStatus.SERVICE_UNAVAILABLE_503);
+    return 'Route called';
   }
 }

@@ -1,14 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 
 interface User {
   id: number;
   name: string;
   age: number;
 }
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT }) // by default it's use default scope
+// @Injectable({ scope: Scope.REQUEST }) // by default it's use default scope
 export class UserStore {
   private store = new Map<number, User>();
-
+  constructor() {
+    console.log('store initialized');
+  }
   addUser(user: User) {
     this.store.set(user.id, user);
   }
@@ -28,3 +31,12 @@ export class UserStore {
     this.store.delete(id);
   }
 }
+
+// ## DEFAULT SCOPR ##
+// Single shared provider instance within module (Nestjs default)
+
+//## REQUEST SCOPE ##
+// New Instance of Provider on every request
+
+//## TRANSSIENT SCOPE ##
+// New Dedicated Instance of provider for each consumer (Whoever injects it)

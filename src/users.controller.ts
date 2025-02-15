@@ -1,9 +1,9 @@
 import { Controller, Inject } from '@nestjs/common';
-import { Config } from 'config/config';
+import { Subject } from 'rxjs';
 
 @Controller('/users') // external cors check 'app.localhost'
 export class UsersController {
-  constructor(private config: Config) {
-    console.log(this.config);
+  constructor(@Inject('EVENT_STORE') private evenBus$: Subject<any>) {
+    console.log(this.evenBus$);
   }
 }

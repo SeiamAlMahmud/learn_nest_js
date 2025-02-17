@@ -1,12 +1,10 @@
-import { UserStore } from './../store/users.store';
 import { Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
-import { AlbumsController } from './albums.controller';
-import { UserService } from './users.service';
+import { UsersModule } from './users/users.module';
+import { EmployersModule } from './employers/employers.module';
+import { JobsModule } from './jobs/jobs.module';
 
 // Define your AppModule here
 @Module({
-  controllers: [UsersController, AlbumsController],
-  providers: [UserService],
+  imports: [UsersModule, JobsModule, EmployersModule],
 })
 export class AppModule {}

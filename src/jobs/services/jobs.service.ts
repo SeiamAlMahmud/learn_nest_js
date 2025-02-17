@@ -5,7 +5,7 @@ export interface User {
   id: number;
 }
 @Injectable()
-export class UserService {
+export class JobsService {
   private store = new Map<number, User>();
   addUser(user: User) {
     return this.store.set(user.id, user);

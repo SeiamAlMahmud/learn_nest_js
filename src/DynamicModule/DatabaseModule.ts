@@ -13,5 +13,5 @@ export class DatabaseModule {
       ],
       exports: ['DATABASE_CONNECTION'],
     };
-  }
+  } 
 }

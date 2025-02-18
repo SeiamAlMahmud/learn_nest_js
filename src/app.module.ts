@@ -7,9 +7,9 @@ import { RouterModule } from '@nestjs/core';
 // Define your AppModule here
 @Module({
   imports: [
-    UsersModule,
+    // UsersModule,
     JobsModule,
-    EmployersModule,
+    // EmployersModule,
     RouterModule.register([
       {
         path: 'jobs',

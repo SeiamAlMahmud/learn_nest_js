@@ -1,25 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 export interface User {
   name: string;
   age: number;
   id: number;
+  salary: number;
+  isActive: boolean;
 }
 @Injectable()
 export class JobsService {
   private store = new Map<number, User>();
-  addUser(user: User) {
-    return this.store.set(user.id, user);
+  createJob(user: User) {
+    if (this.store.has(user.id)) {
+      throw new BadGatewayException('User already exists in store');
+    }
+    this.store.set(user.id, user);
+    const newUser = this.findJobById(user.id);
+    return newUser;
   }
-  getUser(id: number) {
-    return this.store.get(id);
+  // addUser(user: User) {
+  //   return this.store.set(user.id, user);
+  // }
+  findJobById(id: number) {
+    return this.store.get(id) || {};
   }
-  getUsers() {
-    return Array.from(this.store).map(([_, user]) => user);
+  incSalary(id: number, inc: number) {
+    const user = this.store.get(id);
+    if (!user) return new NotFoundException('user not found in store');
+    if (user) {
+      user.salary += inc;
+      this.store.set(id, user);
+    }
+    return user || {};
   }
-  updateUser(user: User, id: number) {
-    return this.store.set(id, user);
-  }
-  deleteUser(id: number) {
-    this.store.delete(id);
+
+  toggleJobStatus(id: number, active: boolean) {
+    const user = this.store.get(id);
+    if (!user) return new NotFoundException('user not found in store');
+    if (user) {
+      user.isActive = active;
+      this.store.set(id, user);
+    }
+    return user || {};
   }
 }

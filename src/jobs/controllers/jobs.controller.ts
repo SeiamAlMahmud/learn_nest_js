@@ -3,6 +3,7 @@ import { JobsService, User } from './../services/jobs.service';
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Get,
   Param,
   ParseBoolPipe,
@@ -11,7 +12,7 @@ import {
   Post,
   Put,
   Query,
-  UsePipes,
+  // UsePipes,
 } from '@nestjs/common';
 
 @Controller()
@@ -24,7 +25,7 @@ export class JobsController {
     console.log(createJobDto);
     return this.JobsService.createJob(createJobDto);
   }
-  @Get(':id')
+  @Get('user/:id')
   findJobById(
     @Param(
       'id',
@@ -34,7 +35,7 @@ export class JobsController {
   ) {
     // findJobById(@Param('id', ParseIntPipe) id: number) {
     // make params string to id
-    console.log(typeof id);
+    console.log(id);
     return this.JobsService.findJobById(id);
   }
 
@@ -54,5 +55,12 @@ export class JobsController {
     @Query('active', ParseBoolPipe) active: boolean,
   ) {
     return this.JobsService.toggleJobStatus(id, active);
+  }
+  @Put('exp/:id')
+  setUpdateJobExp(
+    @Param('id') id: number,
+    @Body('exp', new DefaultValuePipe(1), ParseIntPipe) exp: number,
+  ) {
+    return this.JobsService.setJobExp(id, exp);
   }
 }

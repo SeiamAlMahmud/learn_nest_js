@@ -9,6 +9,7 @@ export interface User {
   id: number;
   salary: number;
   isActive: boolean;
+  experience: number;
 }
 @Injectable()
 export class JobsService {
@@ -18,14 +19,14 @@ export class JobsService {
       throw new BadGatewayException('User already exists in store');
     }
     this.store.set(user.id, user);
-    const newUser = this.findJobById(user.id);
+    const newUser = this.store.get(user.id);
     return newUser;
   }
-  // addUser(user: User) {
-  //   return this.store.set(user.id, user);
-  // }
+
   findJobById(id: number) {
-    return this.store.get(id) || {};
+    const user = this.store.get(id);
+    console.log(user);
+    return user;
   }
   incSalary(id: number, inc: number) {
     const user = this.store.get(id);
@@ -42,6 +43,15 @@ export class JobsService {
     if (!user) return new NotFoundException('user not found in store');
     if (user) {
       user.isActive = active;
+      this.store.set(id, user);
+    }
+    return user || {};
+  }
+  setJobExp(id: number, exp: number) {
+    const user = this.store.get(id);
+    if (!user) return new NotFoundException('user not found in store');
+    if (user) {
+      user.experience = exp;
       this.store.set(id, user);
     }
     return user || {};

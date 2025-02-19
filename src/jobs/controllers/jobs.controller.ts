@@ -14,6 +14,7 @@ import {
   Query,
   // UsePipes,
 } from '@nestjs/common';
+import { ParseDatePipe } from '../parse-date.pipe';
 
 @Controller()
 export class JobsController {
@@ -62,5 +63,21 @@ export class JobsController {
     @Body('exp', new DefaultValuePipe(1), ParseIntPipe) exp: number,
   ) {
     return this.JobsService.setJobExp(id, exp);
+  }
+  @Put('/interview/:id')
+  setJobInterview(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(
+      'timestamp',
+      new ParseDatePipe({
+        fromTimeStamp: true,
+        errorMsg: 'Invalid date format',
+      }),
+    )
+    date: string,
+  ) {
+    console.log(date);
+    return date;
+    // return this.JobsService.setJobInterview(id, status);
   }
 }

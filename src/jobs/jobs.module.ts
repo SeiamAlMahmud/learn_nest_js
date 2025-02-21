@@ -1,3 +1,4 @@
+import { ParseDateOptions } from './parse-date.pipe';
 import { Module } from '@nestjs/common';
 import { JobsController } from './controllers/jobs.controller';
 import { JobsAccountController } from './controllers/jobs.accounts.controller';
@@ -9,7 +10,13 @@ import { JobsApplicationsModule } from './job-applications/jobs-application.modu
   // imports: [UsersModule], use it when you make it shared module
   imports: [JobsApplicationsModule], // it is nested module
   controllers: [JobsController, JobsAccountController],
-  providers: [JobsService],
+  providers: [
+    JobsService,
+    {
+      provide: ParseDateOptions,
+      useValue: { fromTimeStamp: true, errorMsg: 'Date transformation failed' },
+    },
+  ],
   exports: [JobsService, JobsApplicationsModule],
 })
 export class JobsModule {}

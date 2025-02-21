@@ -67,17 +67,11 @@ export class JobsController {
   @Put('/interview/:id')
   setJobInterview(
     @Param('id', ParseIntPipe) id: number,
-    @Body(
-      'timestamp',
-      new ParseDatePipe({
-        fromTimeStamp: true,
-        errorMsg: 'Invalid date format',
-      }),
-    )
+    @Body() // globally availavle ParseDatePipe()
     date: string,
   ) {
     console.log(date);
-    return date;
+    return { date, jobId: id };
     // return this.JobsService.setJobInterview(id, status);
   }
 }

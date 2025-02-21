@@ -2,11 +2,10 @@ import {
   ArgumentMetadata,
   BadGatewayException,
   Injectable,
-  Optional,
   PipeTransform,
 } from '@nestjs/common';
 
-interface ParseDateOptions {
+export class ParseDateOptions {
   fromTimeStamp: boolean;
   errorMsg: string;
 }
@@ -15,7 +14,7 @@ export class ParseDatePipe implements PipeTransform {
   private fromTimeStamp: boolean;
   private errorMsg: string;
 
-  constructor(@Optional() options: ParseDateOptions) {
+  constructor(options?: ParseDateOptions) {
     this.fromTimeStamp =
       options?.fromTimeStamp !== undefined ? options.fromTimeStamp : true;
     this.errorMsg = options?.errorMsg || 'Invalid date';

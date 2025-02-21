@@ -18,6 +18,7 @@ export class ParseDatePipe implements PipeTransform {
     this.fromTimeStamp =
       options?.fromTimeStamp !== undefined ? options.fromTimeStamp : true;
     this.errorMsg = options?.errorMsg || 'Invalid date';
+    console.log(this);
   }
   transform(value: string | number, metadata: ArgumentMetadata) {
     const { data: isKeyGiven } = metadata;

@@ -14,7 +14,6 @@ import {
   Query,
   // UsePipes,
 } from '@nestjs/common';
-import { ParseDatePipe } from '../parse-date.pipe';
 
 @Controller()
 export class JobsController {
@@ -71,7 +70,7 @@ export class JobsController {
     date: string,
   ) {
     console.log(date);
-    return { date, jobId: id };
+    return { date, jobId: id / 1000 };
     // return this.JobsService.setJobInterview(id, status);
   }
 }

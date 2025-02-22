@@ -14,6 +14,9 @@ import {
   Query,
   // UsePipes,
 } from '@nestjs/common';
+import { CreateJobDTO } from '../dto/create-job.dto';
+import { JoiValidationPipe } from '../joi-validation.pipe';
+import { createJobSchema } from '../create-job.schema';
 
 @Controller()
 export class JobsController {
@@ -21,8 +24,9 @@ export class JobsController {
     console.log('JobsController initialized');
   }
   @Post('/createJob')
-  createJob(@Body() createJobDto: User) {
-    console.log(createJobDto);
+  createJob(
+    @Body(new JoiValidationPipe(createJobSchema)) createJobDto: CreateJobDTO,
+  ) {
     return this.JobsService.createJob(createJobDto);
   }
   @Get('user/:id')

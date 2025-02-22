@@ -17,10 +17,10 @@ import { APP_PIPE } from '@nestjs/core';
       provide: ParseDateOptions,
       useValue: { fromTimeStamp: true, errorMsg: 'Date transformation failed' },
     },
-    {
-      provide: APP_PIPE,
-      useClass: ParseDatePipe, // Dependency injection will woirk  because the pipe is created inside the application contex. We cacn inject options but only from the declaring module.
-    },
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: ParseDatePipe, // Dependency injection will woirk  because the pipe is created inside the application contex. We cacn inject options but only from the declaring module.
+    // },
   ],
   exports: [JobsService, JobsApplicationsModule],
 })

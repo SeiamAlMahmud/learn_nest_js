@@ -1,22 +1,25 @@
 import { HttpStatus } from 'http-status-string';
-import { JobsService, User } from './../services/jobs.service';
+import { JobsService } from './../services/jobs.service';
 import {
   Body,
   Controller,
   DefaultValuePipe,
   Get,
   Param,
+  ParseArrayPipe,
   ParseBoolPipe,
   ParseFloatPipe,
   ParseIntPipe,
   Post,
   Put,
   Query,
+  UsePipes,
+  ValidationPipe,
   // UsePipes,
 } from '@nestjs/common';
 import { CreateJobDTO } from '../dto/create-job.dto';
-import { JoiValidationPipe } from '../joi-validation.pipe';
-import { createJobSchema } from '../create-job.schema';
+// import { JoiValidationPipe } from '../joi-validation.pipe';
+// import { createJobSchema } from '../create-job.schema';
 
 @Controller()
 export class JobsController {
@@ -24,10 +27,16 @@ export class JobsController {
     console.log('JobsController initialized');
   }
   @Post('/createJob')
+  // @UsePipes(ValidationPipe) // if geeting as an Object
+  // createJob(@Body() createJobDto: CreateJobDTO) {
+  // if geeting as an Object
   createJob(
-    @Body(new JoiValidationPipe(createJobSchema)) createJobDto: CreateJobDTO,
+    @Body(new ParseArrayPipe({ items: CreateJobDTO }), ValidationPipe)
+    createJobDto: CreateJobDTO,
   ) {
-    return this.JobsService.createJob(createJobDto);
+    // console.log(createJobDto);
+    return createJobDto;
+    //  this.JobsService.createJob(createJobDto);
   }
   @Get('user/:id')
   findJobById(
